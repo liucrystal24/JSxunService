@@ -5,11 +5,12 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+
+  // 主页
   router.get('/', controller.home.index);
 
 
   // 桥梁
-
   router.post('/api/bridgeAdd', controller.bridge.bridgeAdd);
 
   router.post('/api/bridgeUpdate', controller.bridge.bridgeUpdate);
