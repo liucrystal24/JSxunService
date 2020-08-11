@@ -7,6 +7,10 @@ module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
 
+  // root
+
+  router.get('/api/login', controller.root.login);
+
 
   // 桥梁
 
