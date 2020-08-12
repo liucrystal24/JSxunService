@@ -13,6 +13,15 @@ class RootService extends Service {
     const result = await this.app.mysql.query('SELECT `password`,`city` FROM `login_user` WHERE username = ?', [ username ]);
     return result;
   }
+  async npRoot(username, password) {
+    const result = await this.app.mysql.query('SELECT `taskPublish`,`taskOne`,`taskTwo`,`warningUpdate`,`duanCheck`,`dataAny`,`token` FROM `login_user` WHERE username = ? AND password = ?', [ username, password ]);
+    return result;
+  }
+  async tdRoot(token, deviceID) {
+    const result = await this.app.mysql.query('SELECT `taskPublish`,`taskOne`,`taskTwo`,`warningUpdate`,`duanCheck`,`dataAny` FROM `login_user` WHERE token = ? AND deviceID = ?', [ token, deviceID ]);
+    return result;
+  }
+  
 }
 
 module.exports = RootService;

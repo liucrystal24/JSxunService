@@ -10,6 +10,8 @@ module.exports = app => {
   // root
 
   router.get('/api/login', controller.root.login);
+  router.get('/api/npRoot', controller.root.npRoot);
+  router.get('/api/tdRoot', controller.root.tdRoot);
 
 
   // 桥梁
@@ -35,6 +37,11 @@ module.exports = app => {
   router.post('/api/flowImage', controller.flow.flowImage);
 
   router.post('/api/flowUpload', controller.flow.flowUpload);
+
+  // 断面
+
+  router.get('/api/duanRead', controller.duan.duanRead);
+
 
 };
 

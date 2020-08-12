@@ -2,7 +2,23 @@
 
 const Controller = require("egg").Controller;
 
-class BridgeController extends Controller {
+class DuanController extends Controller {
+  async duanRead() {
+    const ctx = this.ctx;
+    const duanInfo = await ctx.service.duan.duanRead();
+    const infolength = duanInfo.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: duanInfo,
+      };
+    }
+  }
+
   async bridgeAdd() {
     const ctx = this.ctx;
     const request = ctx.request.body;
@@ -72,22 +88,6 @@ class BridgeController extends Controller {
     }
   }
 
-  async bridgeRead() {
-    const ctx = this.ctx;
-    const bridgeInfo = await ctx.service.bridge.bridgeRead();
-    const infolength = bridgeInfo.length;
-    if (infolength === 0) {
-      ctx.body = {
-        code: 0,
-      };
-    } else {
-      ctx.body = {
-        code: 1,
-        info: bridgeInfo,
-      };
-    }
-  }
-
   async bridgeState1() {
     const ctx = this.ctx;
     const bridgeID = ctx.query.bridgeID;
@@ -141,4 +141,4 @@ class BridgeController extends Controller {
   }
 }
 
-module.exports = BridgeController;
+module.exports = DuanController;
