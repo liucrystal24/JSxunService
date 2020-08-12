@@ -62,6 +62,50 @@ class RootController extends Controller {
       };
     }
   }
+  async rootRead() {
+    const ctx = this.ctx;
+    const Info = await ctx.service.root.rootRead();
+    const infolength = Info.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: Info,
+      };
+    }
+  }
+  async rootUpdate() {
+    const ctx = this.ctx;
+    const request = ctx.request.body;
+    const username = request.username;
+    const taskPublish = request.taskPublish;
+    const taskOne = request.taskOne;
+    const taskTwo = request.taskTwo;
+    const warningUpdate = request.warningUpdate;
+    const duanCheck = request.duanCheck;
+    const dataAny = request.dataAny;
+    const Info = await ctx.service.root.rootUpdate(
+      username,
+      taskPublish,
+      taskOne,
+      taskTwo,
+      warningUpdate,
+      duanCheck,
+      dataAny
+    );
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1
+      };
+    }
+  }
 }
 
 module.exports = RootController;

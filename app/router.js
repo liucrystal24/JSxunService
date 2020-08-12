@@ -12,7 +12,12 @@ module.exports = app => {
   router.get('/api/login', controller.root.login);
   router.get('/api/npRoot', controller.root.npRoot);
   router.get('/api/tdRoot', controller.root.tdRoot);
+  router.get('/api/rootRead', controller.root.rootRead);
+  router.post('/api/rootUpdate', controller.root.rootUpdate);
 
+  // 设备
+  router.get('/api/deviceRead', controller.device.deviceRead);
+  router.post('/api/deviceAdd', controller.device.deviceAdd);
 
   // 桥梁
 
