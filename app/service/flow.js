@@ -79,6 +79,18 @@ class FlowService extends Service {
     return { result, bridgeID, flowData, deviceType, testTime, lon, lat };
   }
 
+  async waterflowSearch(startdate, enddate) {
+    const result = await this.app.mysql.query(
+      "SELECT StartTime,EndTime,Flow,WaterLine,SectionNum,BridgeNum,DeviceType FROM `table_flow` WHERE `EndTime` <= ? AND `StartTime` >= ?",
+      [enddate, startdate]
+    );
+    for (let i = 0; i < result.length; i++) {
+      result[i].StartTime = this.format(result[i].StartTime);
+      result[i].EndTime = this.format(result[i].EndTime);
+    }
+    return result;
+  }
+
   format(date) {
     const year = date.getFullYear();
     const month1 = date.getMonth() + 1;

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
 class FlowController extends Controller {
   async flowRead() {
@@ -24,9 +24,7 @@ class FlowController extends Controller {
     const request = ctx.request.body;
     const ID = request.ID;
     // console.log(ID);
-    const imgInfo = await ctx.service.flow.flowImage(
-      ID
-    );
+    const imgInfo = await ctx.service.flow.flowImage(ID);
     if (imgInfo == null) {
       ctx.body = {
         // 失败
@@ -34,7 +32,7 @@ class FlowController extends Controller {
       };
     } else {
       // ctx.body = imgInfo;
-      ctx.body = imgInfo
+      ctx.body = imgInfo;
     }
   }
   async flowUpload() {
@@ -66,17 +64,33 @@ class FlowController extends Controller {
       ctx.body = {
         code: 1,
         info: {
-          'bridgeID': fileUploadInfo.bridgeID,
-          'flowData': fileUploadInfo.flowData,
-          'deviceType': fileUploadInfo.deviceType,
-          'testTime': fileUploadInfo.testTime,
-          'lon': fileUploadInfo.lon,
-          'lat': fileUploadInfo.lat,
-        }
-      }
+          bridgeID: fileUploadInfo.bridgeID,
+          flowData: fileUploadInfo.flowData,
+          deviceType: fileUploadInfo.deviceType,
+          testTime: fileUploadInfo.testTime,
+          lon: fileUploadInfo.lon,
+          lat: fileUploadInfo.lat,
+        },
+      };
     }
   }
-
+  async waterflowSearch() {
+    const ctx = this.ctx;
+    const startdate = ctx.query.startdate;
+    const enddate = ctx.query.enddate;
+    const Info = await ctx.service.flow.waterflowSearch(startdate, enddate);
+    const infolength = Info.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: Info,
+      };
+    }
+  }
 }
 
 module.exports = FlowController;

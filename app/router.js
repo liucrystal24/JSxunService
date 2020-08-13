@@ -43,9 +43,12 @@ module.exports = app => {
 
   router.post('/api/flowUpload', controller.flow.flowUpload);
 
+  router.get('/api/waterflowSearch', controller.flow.waterflowSearch);
+
   // 断面
 
   router.get('/api/duanRead', controller.duan.duanRead);
+  router.get('/api/duanSearch', controller.duan.duanSearch);
 
 
 };
