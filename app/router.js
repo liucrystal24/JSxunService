@@ -50,6 +50,10 @@ module.exports = app => {
   router.get('/api/duanRead', controller.duan.duanRead);
   router.get('/api/duanSearch', controller.duan.duanSearch);
 
+  // task
+
+  router.post('/api/taskAdd', controller.task.taskAdd);
+  router.get('/api/taskRead', controller.task.taskRead);
 
 };
 
