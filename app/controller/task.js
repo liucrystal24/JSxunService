@@ -3,7 +3,6 @@
 const Controller = require("egg").Controller;
 
 class TaskController extends Controller {
-
   async taskAdd() {
     const ctx = this.ctx;
     const request = ctx.request.body;
@@ -18,7 +17,16 @@ class TaskController extends Controller {
     const manPublishName = request.manPublishName;
     const publishTips = request.publishTips;
     const Info = await ctx.service.task.taskAdd(
-      publishTime, DoTime, taskState, publishAddress, deviceID, deviceType, mandoID, mandoName, manPublishName, publishTips
+      publishTime,
+      DoTime,
+      taskState,
+      publishAddress,
+      deviceID,
+      deviceType,
+      mandoID,
+      mandoName,
+      manPublishName,
+      publishTips
     );
     if (Info.affectedRows === 0) {
       ctx.body = {
@@ -45,6 +53,23 @@ class TaskController extends Controller {
       ctx.body = {
         code: 1,
         info: Info,
+      };
+    }
+  }
+
+  async taskUpdate() {
+    const ctx = this.ctx;
+    const request = ctx.request.body;
+    const ID = request.ID;
+    const taskState = request.taskState;
+    const Info = await ctx.service.task.taskUpdate(ID, taskState);
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
       };
     }
   }

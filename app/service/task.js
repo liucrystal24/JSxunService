@@ -3,10 +3,29 @@
 const Service = require("egg").Service;
 
 class TaskService extends Service {
-  async taskAdd(publishTime, DoTime, taskState, publishAddress, deviceID, deviceType, mandoID, mandoName, manPublishName, publishTips) {
-
-    const result = await this.app.mysql.insert('task_list', {
-      publishTime, DoTime, taskState, publishAddress, deviceID, deviceType, mandoID, mandoName, manPublishName, publishTips,
+  async taskAdd(
+    publishTime,
+    DoTime,
+    taskState,
+    publishAddress,
+    deviceID,
+    deviceType,
+    mandoID,
+    mandoName,
+    manPublishName,
+    publishTips
+  ) {
+    const result = await this.app.mysql.insert("task_list", {
+      publishTime,
+      DoTime,
+      taskState,
+      publishAddress,
+      deviceID,
+      deviceType,
+      mandoID,
+      mandoName,
+      manPublishName,
+      publishTips,
     });
     return { result };
   }
@@ -17,16 +36,41 @@ class TaskService extends Service {
     //   columns: [ 'fileUpload' ], // 要查询的表字段
     // });
     // return result;
-    const result = await this.app.mysql.query(
-      "SELECT * FROM `task_list`"
-    );
+    const result = await this.app.mysql.query("SELECT * FROM `task_list`");
     for (let i = 0; i < result.length; i++) {
       result[i].publishTime = this.format(result[i].publishTime);
       result[i].DoTime = this.format(result[i].DoTime);
+      if (result[i].stateTime1) {
+        result[i].stateTime1 = this.format(result[i].stateTime1);
+      }
+      if (result[i].stateTime2) {
+        result[i].stateTime2 = this.format(result[i].stateTime2);
+      }
+      if (result[i].stateTime3) {
+        result[i].stateTime3 = this.format(result[i].stateTime3);
+      }
+      if (result[i].stateTime4) {
+        result[i].stateTime4 = this.format(result[i].stateTime4);
+      }
     }
     return result;
   }
-
+  async taskUpdate(ID, taskState) {
+    const options = {
+      where: {
+        ID,
+      },
+    };
+    const result = await this.app.mysql.update(
+      "task_list",
+      {
+        taskState,
+      },
+      options
+    );
+    console.log(result);
+    return result;
+  }
   async duanSearch(startdate, enddate) {
     const result = await this.app.mysql.query(
       "SELECT * FROM `table_adcp_data` WHERE `EndTime` <= ? AND `StartTime` >= ?",

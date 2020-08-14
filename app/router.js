@@ -54,6 +54,7 @@ module.exports = app => {
 
   router.post('/api/taskAdd', controller.task.taskAdd);
   router.get('/api/taskRead', controller.task.taskRead);
+  router.post('/api/taskUpdate', controller.task.taskUpdate);
 
 };
 
