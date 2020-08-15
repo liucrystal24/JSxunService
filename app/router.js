@@ -15,9 +15,11 @@ module.exports = app => {
   router.get('/api/rootRead', controller.root.rootRead);
   router.post('/api/rootUpdate', controller.root.rootUpdate);
 
-  // 设备
+  // 设备,人员
   router.get('/api/deviceRead', controller.device.deviceRead);
   router.post('/api/deviceAdd', controller.device.deviceAdd);
+  router.get('/api/deviceDelete', controller.device.deviceDelete);
+  router.get('/api/userDelete', controller.device.userDelete);
 
   // 桥梁
 

@@ -8,6 +8,7 @@ class DeviceService extends Service {
     const result = await this.app.mysql.query('SELECT * FROM `device_list`');
     return result;
   }
+
   // 用户和设备添加：在同一张表，故方法一样
   async deviceAdd(deviceID, deviceName, deviceType, userID,
     userName) {
@@ -21,6 +22,20 @@ class DeviceService extends Service {
     });
     return { result };
   }
+
+  async deviceDelete(deviceID) {
+    const result = await this.app.mysql.delete('device_list', {
+      deviceID,
+    });
+    return { result };
+  }
+  async userDelete(userID) {
+    const result = await this.app.mysql.delete('device_list', {
+      userID,
+    });
+    return { result };
+  }
 }
+
 
 module.exports = DeviceService;

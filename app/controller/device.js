@@ -47,7 +47,39 @@ class DeviceController extends Controller {
       };
     }
   }
-  
+
+  async deviceDelete() {
+    const ctx = this.ctx;
+    const deviceID = ctx.query.deviceID;
+    const Info = await ctx.service.device.deviceDelete(deviceID);
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        // 失败
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: ctx.query,
+      };
+    }
+  }
+  async userDelete() {
+    const ctx = this.ctx;
+    const userID = ctx.query.userID;
+    const Info = await ctx.service.device.userDelete(userID);
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        // 失败
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: ctx.query,
+      };
+    }
+  }
 }
 
 module.exports = DeviceController;
