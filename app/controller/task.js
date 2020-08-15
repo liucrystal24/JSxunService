@@ -56,7 +56,23 @@ class TaskController extends Controller {
       };
     }
   }
-
+  async taskSearch() {
+    const ctx = this.ctx;
+    const deviceID = ctx.query.deviceID;
+    const token = ctx.query.token;
+    const Info = await ctx.service.task.taskSearch(deviceID, token);
+    const infolength = Info.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: Info,
+      };
+    }
+  }
   async taskUpdate() {
     const ctx = this.ctx;
     const request = ctx.request.body;

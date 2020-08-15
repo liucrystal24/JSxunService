@@ -82,7 +82,29 @@ class TaskService extends Service {
     }
     return result;
   }
-
+  async taskSearch(deviceID, token) {
+    const result = await this.app.mysql.query(
+      "SELECT * FROM `task_list` WHERE `deviceID` = ? AND `token` = ?",
+      [deviceID, token]
+    );
+    for (let i = 0; i < result.length; i++) {
+      result[i].publishTime = this.format(result[i].publishTime);
+      result[i].DoTime = this.format(result[i].DoTime);
+      if (result[i].stateTime1) {
+        result[i].stateTime1 = this.format(result[i].stateTime1);
+      }
+      if (result[i].stateTime2) {
+        result[i].stateTime2 = this.format(result[i].stateTime2);
+      }
+      if (result[i].stateTime3) {
+        result[i].stateTime3 = this.format(result[i].stateTime3);
+      }
+      if (result[i].stateTime4) {
+        result[i].stateTime4 = this.format(result[i].stateTime4);
+      }
+    }
+    return result;
+  }
   format(date) {
     const year = date.getFullYear();
     const month1 = date.getMonth() + 1;
