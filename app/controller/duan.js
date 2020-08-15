@@ -35,6 +35,43 @@ class DuanController extends Controller {
       };
     }
   }
+  async duanUpload() {
+    const ctx = this.ctx;
+    const request = ctx.request.body;
+    const FlowDirection = request.FlowDirection;
+    const LeftDistance = request.LeftDistance;
+    const RightDistance = request.RightDistance;
+    const TotalQ = request.TotalQ;
+    const TotalArea = request.TotalArea;
+    const QperArea = request.QperArea;
+    const MeanWaterDepth = request.MeanWaterDepth;
+    const Width = request.Width;
+    const StartTime = request.StartTime;
+    const EndTime = request.EndTime;
+    const Info = await ctx.service.duan.duanUpload(
+      FlowDirection,
+      LeftDistance,
+      RightDistance,
+      TotalQ,
+      TotalArea,
+      QperArea,
+      MeanWaterDepth,
+      Width,
+      StartTime,
+      EndTime
+    );
+    // console.log(fileUploadInfo.result.affectedRows)
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        // 失败
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1
+      };
+    }
+  }
 }
 
 module.exports = DuanController;

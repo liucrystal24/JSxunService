@@ -27,6 +27,33 @@ class DuanService extends Service {
     return result;
   }
 
+  async duanUpload(
+    FlowDirection,
+    LeftDistance,
+    RightDistance,
+    TotalQ,
+    TotalArea,
+    QperArea,
+    MeanWaterDepth,
+    Width,
+    StartTime,
+    EndTime
+  ) {
+    const result = await this.app.mysql.insert("table_adcp_data", {
+      FlowDirection,
+      LeftDistance,
+      RightDistance,
+      TotalQ,
+      TotalArea,
+      QperArea,
+      MeanWaterDepth,
+      Width,
+      StartTime,
+      EndTime,
+    });
+    return result;
+  }
+
   format(date) {
     const year = date.getFullYear();
     const month1 = date.getMonth() + 1;
