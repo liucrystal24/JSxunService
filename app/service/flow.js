@@ -91,6 +91,24 @@ class FlowService extends Service {
     return result;
   }
 
+  async flowWarningUpdate(type, updateData) {
+    // UPDATE `warning_setting` SET `type` = '150' WHERE `bridgeID` = 'jd01'
+    let sql = "UPDATE `warning_setting` SET " + type + " = " + updateData + " WHERE `bridgeID` = 'jd01'";
+    const result = await this.app.mysql.query(sql);
+    return result;
+  }
+  async flowWarningRead() {
+    const Info = await this.app.mysql.select("warning_setting", {
+      // 搜索 test_upload 表
+      where: { bridgeID: 'jd01'}, // WHERE 条件
+      columns: ["bridgeID", "bridgeName", "waterlineMaxNum", "flowMaxNum"], // 要查询的表字段
+      // orders: [["testTime", "desc"]], // 排序方式
+      // limit: 10, // 返回数据量
+      offset: 0, // 数据偏移量
+    });
+    console.log(Info);
+    return Info;
+  }
   format(date) {
     const year = date.getFullYear();
     const month1 = date.getMonth() + 1;

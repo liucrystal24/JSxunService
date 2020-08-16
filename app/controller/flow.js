@@ -91,6 +91,38 @@ class FlowController extends Controller {
       };
     }
   }
+  async flowWarningUpdate() {
+    const ctx = this.ctx;
+    const request = ctx.request.body;
+    const type = request.type;
+    const updateData = request.updateData;
+    const Info = await ctx.service.flow.flowWarningUpdate(type, updateData);
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+      };
+    }
+  }
+  async flowWarningRead() {
+    const ctx = this.ctx;
+    const Info = await ctx.service.flow.flowWarningRead();
+    const infolength = Info.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: Info,
+      };
+    }
+  }
+
 }
 
 module.exports = FlowController;

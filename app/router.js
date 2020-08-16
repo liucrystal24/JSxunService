@@ -47,6 +47,10 @@ module.exports = app => {
 
   router.get('/api/waterflowSearch', controller.flow.waterflowSearch);
 
+  router.post('/api/flowWarningUpdate', controller.flow.flowWarningUpdate);
+
+  router.get('/api/flowWarningRead', controller.flow.flowWarningRead);
+
   // 断面
 
   router.get('/api/duanRead', controller.duan.duanRead);
