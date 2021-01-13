@@ -1,33 +1,34 @@
-# JSxunService01
+# 江苏巡测平台后台
 
-
-
-## QuickStart
-
-<!-- add docs here for user -->
-
-see [egg docs][egg] for more detail.
-
-### Development
+### 1、运行（根目录）
 
 ```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
+# 安装所需依赖
+npm install
+
+# 测试环境运行
+npm run dev
+
+# 生产环境启动服务
+npm start
+
+# 生产环境关闭服务
+npm stop
 ```
 
-### Deploy
+### 2、项目结构
 
-```bash
-$ npm start
-$ npm stop
-```
+#### 项目搭建工具
 
-### npm scripts
+1. 项目使用 Egg.JS 搭建，项目结构参考官方说明（说明文档：https://eggjs.org/zh-cn/intro/）
 
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+#### 主要目录说明
 
+1. app / controller : 控制器，处理接口返回数
+2. app / service : 服务，处理数据库接口
+3. app / router.js：接口地址路由
+4. config  服务地址配置（包括数据库）
 
-[egg]: https://eggjs.org
+### 3、接口文档
+
+接口字段文档说明地址：https://easydoc.xyz/s/38259950
