@@ -18,6 +18,67 @@ class DuanController extends Controller {
       };
     }
   }
+  async SectionNumRead() {
+    const ctx = this.ctx;
+    const SectionNumInfo = await ctx.service.duan.SectionNumRead();
+    const infolength = SectionNumInfo.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: SectionNumInfo,
+      };
+    }
+  }
+
+  async SectionDepth() {
+    const ctx = this.ctx;
+    const startdate = ctx.query.startdate;
+    const enddate = ctx.query.enddate;
+    const sectionNum = ctx.query.sectionNum;
+    const Info = await ctx.service.duan.SectionDepth(
+      startdate,
+      enddate,
+      sectionNum
+    );
+    const infolength = Info.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: Info,
+      };
+    }
+  }
+  
+  async SectionFlow() {
+    const ctx = this.ctx;
+    const startdate = ctx.query.startdate;
+    const enddate = ctx.query.enddate;
+    const sectionNum = ctx.query.sectionNum;
+    const Info = await ctx.service.duan.SectionFlow(
+      startdate,
+      enddate,
+      sectionNum
+    );
+    const infolength = Info.length;
+    if (infolength === 0) {
+      ctx.body = {
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: Info,
+      };
+    }
+  }
   async duanSearch() {
     const ctx = this.ctx;
     const startdate = ctx.query.startdate;
@@ -68,7 +129,7 @@ class DuanController extends Controller {
       };
     } else {
       ctx.body = {
-        code: 1
+        code: 1,
       };
     }
   }

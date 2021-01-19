@@ -40,6 +40,7 @@ class FlowController extends Controller {
     const request = ctx.request.body;
     const bridgeID = request.bridgeID;
     const flowData = request.flowData;
+    const flowAvg = request.flowAvg;
     const deviceType = request.deviceType;
     const testTime = request.testTime;
     const fileUpload = request.fileUpload;
@@ -48,6 +49,7 @@ class FlowController extends Controller {
     const fileUploadInfo = await ctx.service.flow.flowUpload(
       bridgeID,
       flowData,
+      flowAvg,
       deviceType,
       testTime,
       fileUpload,
@@ -66,6 +68,7 @@ class FlowController extends Controller {
         info: {
           bridgeID: fileUploadInfo.bridgeID,
           flowData: fileUploadInfo.flowData,
+          flowAvg: fileUploadInfo.flowAvg,
           deviceType: fileUploadInfo.deviceType,
           testTime: fileUploadInfo.testTime,
           lon: fileUploadInfo.lon,
@@ -107,9 +110,9 @@ class FlowController extends Controller {
       };
     }
   }
-  async flowWarningRead() {
+  async warningRead() {
     const ctx = this.ctx;
-    const Info = await ctx.service.flow.flowWarningRead();
+    const Info = await ctx.service.flow.warningRead();
     const infolength = Info.length;
     if (infolength === 0) {
       ctx.body = {
@@ -122,7 +125,77 @@ class FlowController extends Controller {
       };
     }
   }
+  
+  async warningAdd() {
+    const ctx = this.ctx;
+    const request = ctx.request.body;
+    const area = request.area;
+    const waterlineMaxNum = request.waterlineMaxNum;
+    const flowMaxNum = request.flowMaxNum;
+    const speedMaxNum = request.speedMaxNum;
+    console.log(request);
+    const Info = await ctx.service.flow.warningAdd(
+      area,
+      waterlineMaxNum,
+      flowMaxNum,
+      speedMaxNum
+    );
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        // 失败
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: ctx.query,
+      };
+    }
+  }
 
+  async warningDelete() {
+    const ctx = this.ctx;
+    const area = ctx.query.area;
+    const Info = await ctx.service.flow.warningDelete(area);
+    if (Info.affectedRows === 0) {
+      ctx.body = {
+        // 失败
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: ctx.query,
+      };
+    }
+  }
+
+  async warningUpdate() {
+    const ctx = this.ctx;
+    const request = ctx.request.body;
+    const area = request.area;
+    const waterlineMaxNum = request.waterlineMaxNum;
+    const flowMaxNum = request.flowMaxNum;
+    const speedMaxNum = request.speedMaxNum;
+    console.log('test'+ area)
+    const info = await ctx.service.flow.warningUpdate(
+      area,
+      waterlineMaxNum,
+      flowMaxNum,
+      speedMaxNum
+    );
+    if (info.affectedRows === 0) {
+      ctx.body = {
+        // 失败
+        code: 0,
+      };
+    } else {
+      ctx.body = {
+        code: 1,
+        info: ctx.query,
+      };
+    }
+  }
 }
 
 module.exports = FlowController;

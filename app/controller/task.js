@@ -58,9 +58,9 @@ class TaskController extends Controller {
   }
   async taskSearch() {
     const ctx = this.ctx;
-    const deviceID = ctx.query.deviceID;
+    const mandoName = ctx.query.mandoName;
     const token = ctx.query.token;
-    const Info = await ctx.service.task.taskSearch(deviceID, token);
+    const Info = await ctx.service.task.taskSearch(mandoName, token);
     const infolength = Info.length;
     if (infolength === 0) {
       ctx.body = {

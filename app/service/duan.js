@@ -14,6 +14,36 @@ class DuanService extends Service {
     );
     return result;
   }
+  async SectionNumRead() {
+    const result = await this.app.mysql.query(
+      "SELECT DISTINCT SectionNum FROM `table_flow`"
+    );
+    return result;
+  }
+
+  async SectionDepth(startdate, enddate, sectionNum) {
+    const result = await this.app.mysql.query(
+      "SELECT EndTime,AveDepth FROM `table_flow` WHERE `SectionNum` = ? AND `EndTime` <= ? AND `StartTime` >= ?",
+      [sectionNum, enddate, startdate]
+    );
+    console.log(result);
+    for (let i = 0; i < result.length; i++) {
+      result[i].EndTime = this.format(result[i].EndTime);
+    }
+    return result;
+  }
+
+  async SectionFlow(startdate, enddate, sectionNum) {
+    const result = await this.app.mysql.query(
+      "SELECT EndTime,Flow FROM `table_flow` WHERE `SectionNum` = ? AND `EndTime` <= ? AND `StartTime` >= ?",
+      [sectionNum, enddate, startdate]
+    );
+    console.log(result);
+    for (let i = 0; i < result.length; i++) {
+      result[i].EndTime = this.format(result[i].EndTime);
+    }
+    return result;
+  }
 
   async duanSearch(startdate, enddate) {
     const result = await this.app.mysql.query(

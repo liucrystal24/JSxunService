@@ -15,7 +15,14 @@ class FlowService extends Service {
     const flowInfo = await this.app.mysql.select("test_upload", {
       // 搜索 test_upload 表
       // where: { status: 'draft', author: ['author1', 'author2'] }, // WHERE 条件
-      columns: ["ID", "bridgeID", "flowData", "deviceType", "testTime"], // 要查询的表字段
+      columns: [
+        "ID",
+        "bridgeID",
+        "flowData",
+        "flowAvg",
+        "deviceType",
+        "testTime",
+      ], // 要查询的表字段
       orders: [["testTime", "desc"]], // 排序方式
       // limit: 10, // 返回数据量
       offset: 0, // 数据偏移量
@@ -52,6 +59,7 @@ class FlowService extends Service {
   async flowUpload(
     bridgeID,
     flowData,
+    flowAvg,
     deviceType,
     testTime,
     fileUpload,
@@ -70,13 +78,23 @@ class FlowService extends Service {
     const result = await this.app.mysql.insert("test_upload", {
       bridgeID,
       flowData,
+      flowAvg,
       deviceType,
       testTime,
       fileUpload,
       lon,
       lat,
     });
-    return { result, bridgeID, flowData, deviceType, testTime, lon, lat };
+    return {
+      result,
+      bridgeID,
+      flowData,
+      flowAvg,
+      deviceType,
+      testTime,
+      lon,
+      lat,
+    };
   }
 
   async waterflowSearch(startdate, enddate) {
@@ -93,21 +111,56 @@ class FlowService extends Service {
 
   async flowWarningUpdate(type, updateData) {
     // UPDATE `warning_setting` SET `type` = '150' WHERE `bridgeID` = 'jd01'
-    let sql = "UPDATE `warning_setting` SET " + type + " = " + updateData + " WHERE `bridgeID` = 'jd01'";
+    let sql =
+      "UPDATE `warning_setting` SET " +
+      type +
+      " = " +
+      updateData +
+      " WHERE `bridgeID` = 'jd01'";
     const result = await this.app.mysql.query(sql);
     return result;
   }
-  async flowWarningRead() {
-    const Info = await this.app.mysql.select("warning_setting", {
-      // 搜索 test_upload 表
-      where: { bridgeID: 'jd01'}, // WHERE 条件
-      columns: ["bridgeID", "bridgeName", "waterlineMaxNum", "flowMaxNum"], // 要查询的表字段
-      // orders: [["testTime", "desc"]], // 排序方式
-      // limit: 10, // 返回数据量
-      offset: 0, // 数据偏移量
+
+  async warningRead() {
+    const result = await this.app.mysql.query(
+      "SELECT * FROM `warning_setting`"
+    );
+    return result;
+  }
+
+  async warningAdd(
+    area,
+    waterlineMaxNum,
+    flowMaxNum,
+    speedMaxNum
+  ){
+    const result = await this.app.mysql.insert("warning_setting", {
+      area,
+      waterlineMaxNum,
+      flowMaxNum,
+      speedMaxNum
     });
-    console.log(Info);
-    return Info;
+    return { result };
+  }
+
+  async warningDelete(area) {
+    const result = await this.app.mysql.delete("warning_setting", {
+      area,
+    });
+    return { result };
+  }
+
+  async warningUpdate( area,waterlineMaxNum,flowMaxNum,speedMaxNum) {
+    const options = {
+      where: {
+        area,
+      },
+    };
+    const result = await this.app.mysql.update('warning_setting', {
+      waterlineMaxNum,flowMaxNum,speedMaxNum
+    }, options);
+    console.log(options,result);
+    return { result };
   }
   format(date) {
     const year = date.getFullYear();
