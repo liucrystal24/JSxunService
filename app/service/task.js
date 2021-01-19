@@ -82,10 +82,10 @@ class TaskService extends Service {
     }
     return result;
   }
-  async taskSearch(deviceID, token) {
+  async taskSearch(mandoName, token) {
     const result = await this.app.mysql.query(
       "SELECT * FROM `task_list` WHERE `deviceID` = ? AND `token` = ?",
-      [deviceID, token]
+      [mandoName, token]
     );
     for (let i = 0; i < result.length; i++) {
       result[i].publishTime = this.format(result[i].publishTime);

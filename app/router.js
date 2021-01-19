@@ -18,6 +18,7 @@ module.exports = app => {
   // 设备,人员
   router.get('/api/deviceRead', controller.device.deviceRead);
   router.post('/api/deviceAdd', controller.device.deviceAdd);
+  router.post('/api/overtimeUpdate', controller.device.overtimeUpdate);
   router.get('/api/deviceDelete', controller.device.deviceDelete);
   router.get('/api/userDelete', controller.device.userDelete);
 
@@ -49,11 +50,20 @@ module.exports = app => {
 
   router.post('/api/flowWarningUpdate', controller.flow.flowWarningUpdate);
 
-  router.get('/api/flowWarningRead', controller.flow.flowWarningRead);
+  router.get('/api/warningRead', controller.flow.warningRead);
+
+  router.post('/api/warningAdd', controller.flow.warningAdd);
+
+  router.get('/api/warningDelete', controller.flow.warningDelete);
+
+  router.post('/api/warningUpdate', controller.flow.warningUpdate);
 
   // 断面
 
   router.get('/api/duanRead', controller.duan.duanRead);
+  router.get('/api/SectionNumRead', controller.duan.SectionNumRead);
+  router.get('/api/SectionDepth', controller.duan.SectionDepth);
+  router.get('/api/SectionFlow', controller.duan.SectionFlow);
   router.get('/api/duanSearch', controller.duan.duanSearch);
   router.post('/api/duanUpload', controller.duan.duanUpload);
 
